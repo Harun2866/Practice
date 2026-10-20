@@ -1,21 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-<title> Marquee Tag </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>হারুনের কফি শপ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary-color: #6f4e37;
+  --primary-hover: #583e2e;
+  --secondary-color: #25D366;
+  --bg-color: #f4f1ea;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --light-text: #666666;
+  --border-color: #e0e0e0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+html { scroll-behavior: smooth; }
+body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 1.5rem;
+  position: sticky; top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+}
+.logo { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+nav { display: flex; gap: 1rem; margin-top: 0.5rem; }
+nav a { color: white; text-decoration: none; font-weight: 500; padding: 0.3rem 0.6rem; border-radius: 4px; transition: background 0.3s; }
+nav a:hover { background-color: rgba(255, 255, 255, 0.2); }
+.container { max-width: 1200px; margin: 1.5rem auto; padding: 0 1rem; }
+
+/* Hero - FIXED */
+.hero {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex; align-items: center; gap: 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  flex-direction: column;
+  text-align: center;
+}
+.hero-img-wrapper {
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  border: 5px solid var(--primary-color);
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  background-color: #eee;
+  flex-shrink: 0;
+}
+.hero-img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.hero-content h1 { color: var(--primary-color); margin-bottom: 0.5rem; font-size: 1.8rem; }
+.hero-content h3 { color: var(--light-text); margin-bottom: 1rem; font-size: 1.1rem; }
+
+.section-title { text-align: center; margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.8rem; position: relative; }
+.section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--primary-color); margin: 8px auto 0; border-radius: 2px; }
+.category-filters { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+.filter-btn { background: var(--card-bg); border: 1px solid var(--primary-color); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+.filter-btn.active, .filter-btn:hover { background: var(--primary-color); color: white; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+.product-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+.product-img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; }
+.product-info { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
+.product-title { font-size: 1.2rem; margin-bottom: 0.4rem; }
+.product-desc { color: var(--light-text); font-size: 0.88rem; margin-bottom: 1rem; flex-grow: 1; }
+.product-price { font-size: 1.25rem; font-weight: bold; color: var(--primary-color); margin-bottom: 1rem; }
+.card-buttons { display: flex; gap: 8px; }
+.btn { background: var(--primary-color); color: white; border: none; padding: 0.65rem 0.8rem; border-radius: 6px; cursor: pointer; flex: 1; text-align: center; font-weight: 600; text-decoration: none; }
+.btn:hover { background: var(--primary-hover); }
+.btn-outline { background: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); }
+.btn-outline:hover { background: var(--primary-color); color: white; }
+.btn-whatsapp { background-color: var(--secondary-color); margin-top: 0.5rem; }
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; padding: 1rem; }
+.modal-content { background: var(--card-bg); border-radius: 12px; max-width: 550px; width: 100%; padding: 1.5rem; position: relative; max-height: 90vh; overflow-y: auto; }
+.close-modal { position: absolute; top: 10px; right: 15px; font-size: 1.8rem; cursor: pointer; color: #888; }
+.modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; }
+.form-control { width: 100%; padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 6px; }
+.contact-section { background: var(--card-bg); padding: 2rem; border-radius: 12px; margin-bottom: 3rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.contact-info { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-around; }
+.contact-item { display: flex; align-items: center; gap: 0.8rem; }
+.contact-item i { font-size: 1.4rem; color: var(--primary-color); }
+footer { background: var(--primary-color); color: white; text-align: center; padding: 1.2rem; margin-top: 2rem; font-size: 0.9rem; }
+@media (min-width: 768px) { .hero { flex-direction: row; text-align: left; } header { padding: 1rem 2rem; } nav { margin-top: 0; } }
+</style>
 </head>
 <body>
-
-<marquee behavior="slide" direction="right" bgcolor="Yellow">Birshreshtha Munshi Abdur Rouf Public College --> Stop, after scrolling only one time </marquee>
-<marquee behavior="scroll" direction="left">Birshreshtha Munshi Abdur Rouf Public College <-- Continue Scrolling </marquee>
-<marquee behavior="alternate" direction="left">Birshreshtha Munshi Abdur Rouf Public College <-- Both way scrolling --></marquee>
-
-<br><br>
-
-<marquee behavior="scroll" direction="left" onmousedown="this.stop();" onmouseup="this.start();">Click Here and hold the mouse marquee stop</marquee>
-
-<br><br>
-
-<marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">Hover over and hold the mouse marquee stop</marquee>
-
+<header>
+<div class="logo"><i class="fas fa-mug-hot"></i> হারুনের কফি শপ</div>
+<nav>
+<a href="#home">হোম</a>
+<a href="#menu-section">মেনু</a>
+<a href="#contact-section">যোগাযোগ</a>
+</nav>
+</header>
+<div class="container" id="home">
+<section class="hero">
+<div class="hero-img-wrapper">
+<img src="1000082357.jpg" alt="মোহাম্মদ হারুন অর রশিদ" class="hero-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';">
+</div>
+<div class="hero-content">
+<h1>স্বাগতম, হারুনের কফি শপ-এ!</h1>
+<h3>স্বত্বাধিকারী: মোহাম্মদ হারুন অর রশিদ</h3>
+<p>আমরা আপনাকে দিচ্ছি তাজা সুবাসিত কফি, সুস্বাদু চিকেন বিরিয়ানি, বারবিকিউ, স্পেশাল পিৎজা, জ্যুসি বার্গার এবং রিফ্রেশিং মিষ্টি লাচ্ছি।</p>
+<a href="#menu-section" class="btn" style="width: auto; padding: 0.6rem 1.5rem; margin-top: 0.8rem;">মেনু দেখুন</a>
+</div>
+</section>
+<section id="menu-section">
+<h2 class="section-title">আমাদের মেনু</h2>
+<div class="category-filters">
+<button class="filter-btn active" onclick="filterMenu('all', this)">সব আইটেম</button>
+<button class="filter-btn" onclick="filterMenu('biryani', this)">বিরিয়ানি</button>
+<button class="filter-btn" onclick="filterMenu('pizza', this)">পিৎজা</button>
+<button class="filter-btn" onclick="filterMenu('burger', this)">বার্গার</button>
+<button class="filter-btn" onclick="filterMenu('bbq', this)">বারবিকিউ</button>
+<button class="filter-btn" onclick="filterMenu('coffee', this)">কফি</button>
+<button class="filter-btn" onclick="filterMenu('lassi', this)">লাচ্ছি</button>
+</div>
+<div class="products-grid" id="products-grid"></div>
+</section>
+<section class="contact-section" style="text-align: center;">
+<h2 class="section-title">প্রয়োজনে যোগাযোগ করুন</h2>
+<div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+<a href="tel:01706712866" class="btn" style="max-width: 220px;"><i class="fas fa-phone-alt"></i> কল করুন</a>
+<a href="https://wa.me/8801706712866" target="_blank" class="btn btn-whatsapp" style="max-width: 220px;"><i class="fab fa-whatsapp"></i> হোয়াটসঅ্যাপ</a>
+</div>
+</section>
+<section id="contact-section" class="contact-section">
+<h2 class="section-title">যোগাযোগের ঠিকানা</h2>
+<div class="contact-info">
+<div class="contact-item"><i class="fas fa-user-circle"></i><div><strong>স্বত্বাধিকারী:</strong><div>মোহাম্মদ হারুন অর রশিদ</div></div></div>
+<div class="contact-item"><i class="fas fa-phone-alt"></i><div><strong>মোবাইল:</strong><div>01706712866</div></div></div>
+</div>
+</section>
+</div>
+<div class="modal" id="details-modal"><div class="modal-content"><span class="close-modal" onclick="closeDetailsModal()">&times;</span><img src="" id="modal-img" class="modal-img"><h2 id="modal-title"></h2><p id="modal-price"></p><p id="modal-desc"></p><button class="btn" onclick="openCheckoutFromModal()">Order Now</button><button class="btn btn-whatsapp" id="modal-whatsapp-btn">হোয়াটসঅ্যাপে অর্ডার</button></div></div>
+<div class="modal" id="checkout-modal"><div class="modal-content"><span class="close-modal" onclick="closeCheckoutModal()">&times;</span><h2>অর্ডার নিশ্চিতকরণ</h2><p id="checkout-item-title" style="font-weight:bold; margin: 1rem 0;"></p><form id="order-form" onsubmit="submitOrder(event)"><div class="form-group"><label>পণ্যের নাম</label><input type="text" id="checkout-product-name" class="form-control" readonly style="background:#e9ecef;"></div><div class="form-group"><label>গ্রাহকের নাম *</label><input type="text" id="cust-name" class="form-control" required></div><div class="form-group"><label>মোবাইল *</label><input type="tel" id="cust-phone" class="form-control" required></div><div class="form-group"><label>জেলা *</label><select id="district-select" class="form-control" required onchange="onDistrictChange()"><option value="">জেলা নির্বাচন করুন</option></select></div><div class="form-group"><label>উপজেলা *</label><select id="upazila-select" class="form-control" required onchange="onUpazilaChange()" disabled><option value="">প্রথমে জেলা নির্বাচন করুন</option></select></div><div class="form-group"><label>ইউনিয়ন *</label><select id="union-select" class="form-control" required onchange="onUnionChange()" disabled><option value="">প্রথমে উপজেলা নির্বাচন করুন</option></select></div><div class="form-group"><label>গ্রাম *</label><select id="village-select" class="form-control" required disabled><option value="">প্রথমে ইউনিয়ন নির্বাচন করুন</option></select></div><div class="form-group"><label>বিস্তারিত ঠিকানা *</label><textarea id="cust-address" class="form-control" rows="2" required></textarea></div><button type="submit" class="btn">অর্ডার কনফার্ম করুন</button></form></div></div>
+<footer><p>&copy; ২০২৬ হারুনের কফি শপ। স্বত্বাধিকারী: মোহাম্মদ হারুন অর রশিদ (01706712866)</p></footer>
+<script>
+const OWNER_PHONE = "8801706712866";
+const products = [
+{ id: 1, category: 'coffee', name: 'স্পেশাল কফি', price: 120, desc: 'প্রিমিয়াম অ্যারাবিকা বিন থেকে তৈরি তাজা কফি।', image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80' },
+{ id: 2, category: 'biryani', name: 'চিকেন বিরিয়ানি', price: 250, desc: 'খাস বাসমতি চাল ও স্পেশাল মশলায় তৈরি।', image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80' },
+{ id: 3, category: 'bbq', name: 'চিকেন বারবিকিউ', price: 180, desc: 'কয়লার আগুনে পোড়ানো মশলাদার চিকেন।', image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80' },
+{ id: 4, category: 'pizza', name: 'চিজি পিৎজা', price: 450, desc: 'অতিরিক্ত চিজ ও রিচ টপিংসে ভরা।', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80' },
+{ id: 5, category: 'burger', name: 'জুসি বার্গার', price: 160, desc: 'নরম বান ও চিকেন প্যাটি সমৃদ্ধ।', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80' },
+{ id: 6, category: 'lassi', name: 'মিষ্টি লাচ্ছি', price: 90, desc: 'ঘন দই, বাদাম এবং পেস্তার মিশ্রণে।', image: 'https://images.unsplash.com/photo-1571006682888-29a399436d40?auto=format&fit=crop&w=600&q=80' }
+];
+const allDistricts = ["বাগেরহাট","বরিশাল","চট্টগ্রাম","ঢাকা","খুলনা","রাজশাহী","রংপুর","সিলেট","কুমিল্লা","গাজীপুর","নারায়ণগঞ্জ","টাঙ্গাইল"];
+const locationData = {"ঢাকা":{"ধানমন্ডি":{"ধানমন্ডি ১":["গ্রাম ১","গ্রাম ২"]}}};
+allDistricts.forEach(dist => { if (!locationData[dist]) { locationData[dist] = {"সদর":{"ইউনিয়ন ১":["গ্রাম ১","গ্রাম ২"]}}; } });
+let selectedProduct = null;
+function renderProducts(items = products) {
+const grid = document.getElementById('products-grid'); grid.innerHTML = '';
+items.forEach(p => {
+const card = document.createElement('div'); card.className = 'product-card';
+card.innerHTML = `<img src="${p.image}" class="product-img" onclick="openDetailsModal(${p.id})"><div class="product-info"><h3 class="product-title">${p.name}</h3><p class="product-desc">${p.desc}</p><div class="product-price">৳ ${p.price}</div><div class="card-buttons"><button class="btn btn-outline" onclick="openDetailsModal(${p.id})">Details</button><button class="btn" onclick="openCheckoutDirect(${p.id})">Order Now</button></div></div>`;
+grid.appendChild(card);
+});
+}
+function filterMenu(category, btn) {
+document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+if (category === 'all') renderProducts(products); else renderProducts(products.filter(p => p.category === category));
+}
+function initDistrictDropdown() {
+const s = document.getElementById('district-select'); allDistricts.sort().forEach(d => { const o = document.createElement('option'); o.value=d; o.textContent=d; s.appendChild(o); });
+}
+function onDistrictChange() {
+const dist = document.getElementById('district-select').value; const upa = document.getElementById('upazila-select'); const uni = document.getElementById('union-select'); const vil = document.getElementById('village-select');
+upa.innerHTML='<option value="">উপজেলা নির্বাচন করুন</option>'; uni.innerHTML='<option value="">প্রথমে উপজেলা নির্বাচন করুন</option>'; vil.innerHTML='<option value="">প্রথমে ইউনিয়ন নির্বাচন করুন</option>'; uni.disabled=true; vil.disabled=true;
+if(dist && locationData[dist]){ upa.disabled=false; Object.keys(locationData[dist]).forEach(k=>{ const o=document.createElement('option'); o.value=k; o.textContent=k; upa.appendChild(o); }); } else upa.disabled=true;
+}
+function onUpazilaChange() {
+const dist=document.getElementById('district-select').value; const upa=document.getElementById('upazila-select').value; const uni=document.getElementById('union-select'); const vil=document.getElementById('village-select');
+uni.innerHTML='<option value="">ইউনিয়ন নির্বাচন করুন</option>'; vil.innerHTML='<option value="">প্রথমে ইউনিয়ন নির্বাচন করুন</option>'; vil.disabled=true;
+if(dist && upa && locationData[dist][upa]){ uni.disabled=false; Object.keys(locationData[dist][upa]).forEach(k=>{ const o=document.createElement('option'); o.value=k; o.textContent=k; uni.appendChild(o); }); } else uni.disabled=true;
+}
+function onUnionChange() {
+const dist=document.getElementById('district-select').value; const upa=document.getElementById('upazila-select').value; const uni=document.getElementById('union-select').value; const vil=document.getElementById('village-select');
+vil.innerHTML='<option value="">গ্রাম নির্বাচন করুন</option>';
+if(dist && upa && uni && locationData[dist][upa][uni]){ vil.disabled=false; locationData[dist][upa][uni].forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; vil.appendChild(o); }); } else vil.disabled=true;
+}
+function openDetailsModal(id) { selectedProduct=products.find(p=>p.id===id); document.getElementById('modal-img').src=selectedProduct.image; document.getElementById('modal-title').textContent=selectedProduct.name; document.getElementById('modal-price').textContent=`৳ ${selectedProduct.price}`; document.getElementById('modal-desc').textContent=selectedProduct.desc; const msg=encodeURIComponent(`হ্যালো, আমি ${selectedProduct.name} অর্ডার করতে চাই।`); document.getElementById('modal-whatsapp-btn').onclick=()=>{ window.open(`https://wa.me/${OWNER_PHONE}?text=${msg}`,'_blank'); }; document.getElementById('details-modal').style.display='flex'; }
+function closeDetailsModal(){ document.getElementById('details-modal').style.display='none'; }
+function openCheckoutDirect(id){ selectedProduct=products.find(p=>p.id===id); openCheckoutModal(); }
+function openCheckoutFromModal(){ closeDetailsModal(); openCheckoutModal(); }
+function openCheckoutModal(){ document.getElementById('checkout-product-name').value=`${selectedProduct.name} (৳${selectedProduct.price})`; document.getElementById('checkout-item-title').textContent=`আইটেম: ${selectedProduct.name} - ৳${selectedProduct.price}`; document.getElementById('checkout-modal').style.display='flex'; }
+function closeCheckoutModal(){ document.getElementById('checkout-modal').style.display='none'; }
+function submitOrder(e){
+e.preventDefault();
+const productName=document.getElementById('checkout-product-name').value; const name=document.getElementById('cust-name').value; const phone=document.getElementById('cust-phone').value; const dist=document.getElementById('district-select').value; const upa=document.getElementById('upazila-select').value; const uni=document.getElementById('union-select').value; const vil=document.getElementById('village-select').value; const addr=document.getElementById('cust-address').value;
+const orderMessage=`*নতুন অর্ডার*\nআইটেম: ${productName}\nনাম: ${name}\nমোবাইল: ${phone}\nঠিকানা: ${dist}, ${upa}, ${uni}, ${vil}, ${addr}`;
+window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(orderMessage)}`,'_blank');
+alert('ধন্যবাদ! অর্ডার হোয়াটসঅ্যাপে যাচ্ছে।'); closeCheckoutModal();
+}
+window.onclick=function(e){ if(e.target==document.getElementById('details-modal')) closeDetailsModal(); if(e.target==document.getElementById('checkout-modal')) closeCheckoutModal(); };
+window.onload=function(){ renderProducts(); initDistrictDropdown(); };
+</script>
 </body>
-</html>
+                                                                   </html>
