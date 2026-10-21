@@ -1,97 +1,73 @@
 <!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>হারুনের কফি শপ</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root{--primary-color:#6f4e37;--bg-color:#f4f1ea;--card-bg:#fff;--text-color:#333}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
-body{background:var(--bg-color);color:var(--text-color)}
-header{background:var(--primary-color);color:white;padding:1rem 1.5rem;position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center}
-.container{max-width:1200px;margin:1.5rem auto;padding:0 1rem}
-.hero{background:var(--card-bg);border-radius:12px;padding:2rem;display:flex;align-items:center;gap:2rem;margin-bottom:2.5rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);flex-direction:column;text-align:center}
-.hero-img-wrapper{width:180px;height:180px;border-radius:50%;border:5px solid var(--primary-color);overflow:hidden;background:#eee;position:relative;cursor:pointer}
-.hero-img{width:100%;height:100%;object-fit:cover;object-position:top}
-.edit-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);color:white;display:flex;justify-content:center;align-items:center;border-radius:50%;opacity:0;transition:0.3s}
-.hero-img-wrapper:hover .edit-overlay{opacity:1}
-/* ফুল স্ক্রিন প্রোফাইল ভিউ */
-.profile-view-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:3000;justify-content:center;align-items:center;flex-direction:column}
-.profile-view-modal img{max-width:90%;max-height:80%;border-radius:12px;border:4px solid white}
-.profile-view-modal .close-view{position:absolute;top:20px;right:25px;font-size:2.5rem;color:white;cursor:pointer}
-@media(min-width:768px){.hero{flex-direction:row;text-align:left}}
-.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-.product-card{background:var(--card-bg);border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);padding:1rem}
-.btn{background:var(--primary-color);color:white;border:none;padding:0.6rem 1rem;border-radius:6px;cursor:pointer}
-</style>
-</head>
+
+<html>
+
+<head><title> Form Design </title></head>
+
 <body>
-<header><div class="logo"><i class="fas fa-mug-hot"></i> হারুনের কফি শপ</div></header>
 
-<div class="container">
-<section class="hero">
-<!-- সিঙ্গেল ক্লিক = ভিউ, ডাবল ক্লিক = এডমিন আপলোড -->
-<div class="hero-img-wrapper" onclick="viewProfile()" ondblclick="adminUpload()" title="দেখতে ক্লিক করুন, বদলাতে ডাবল ক্লিক">
-<img src="1000082357.jpg" alt="মোহাম্মদ হারুন অর রশিদ" class="hero-img" id="profile-display" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
-<div class="edit-overlay"><i class="fas fa-eye"></i>&nbsp; দেখুন</div>
-</div>
-<input type="file" id="profile-input" accept="image/*" style="display:none;">
-<div class="hero-content">
-<h1 style="color:var(--primary-color);">স্বাগতম, হারুনের কফি শপ-এ!</h1>
-<h3>স্বত্বাধিকারী: মোহাম্মদ হারুন অর রশিদ</h3>
-<p>তাজা কফি, বিরিয়ানি, বারবিকিউ, পিৎজা, বার্গার এবং মিষ্টি লাচ্ছি।<br><small>ছবি দেখতে ক্লিক করুন | ছবি বদলাতে ডাবল ক্লিক (এডমিন)</small></p>
-</div>
-</section>
-</div>
+<form>
 
-<!-- ফুল স্ক্রিন ভিউ মোডাল -->
-<div class="profile-view-modal" id="profile-view-modal" onclick="closeProfileView()">
-<span class="close-view" onclick="closeProfileView()">&times;</span>
-<img src="" id="profile-view-img">
-<p style="color:white;margin-top:15px;">মোহাম্মদ হারুন অর রশিদ</p>
-</div>
+<h4 align="center"> Form </h4>
 
-<script>
-// প্রোফাইল ভিউ + এডমিন আপলোড
-const ADMIN_PASSWORD = "01706712866";
-const profileInput = document.getElementById('profile-input');
-const profileDisplay = document.getElementById('profile-display');
+First name <input type="text" name="firstname" size="30"> Last name <input type = "text"
 
-// সেভ করা ছবি লোড
-const saved = localStorage.getItem('harun_profile_admin_img');
-if(saved){ profileDisplay.src = saved; }
+name="lastname" size="30"> <br><br>
 
-function viewProfile(){
-  const modal = document.getElementById('profile-view-modal');
-  const viewImg = document.getElementById('profile-view-img');
-  viewImg.src = profileDisplay.src;
-  modal.style.display = 'flex';
-}
-function closeProfileView(){
-  document.getElementById('profile-view-modal').style.display = 'none';
-}
-function adminUpload(){
-  event.stopPropagation(); // ভিউ যাতে না খোলে
-  const pass = prompt("এডমিন পাসওয়ার্ড দিন (শুধু তুমি পারবে):");
-  if(pass === ADMIN_PASSWORD){
-    profileInput.click();
-  } else if(pass !== null){
-    alert("ভুল পাসওয়ার্ড! শুধু এডমিন ছবি বদলাতে পারবে।");
-  }
-}
-profileInput.addEventListener('change', function(e){
-  const file = e.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = function(ev){
-      profileDisplay.src = ev.target.result;
-      localStorage.setItem('harun_profile_admin_img', ev.target.result);
-      alert("প্রোফাইল ছবি পরিবর্তন হয়েছে!");
-    };
-    reader.readAsDataURL(file);
-  }
-});
-</script>
+E-mail address <input type="text" name="email" size="30"> Password <input type ="password"
+
+name="password"> <br>
+
+<p> Comment </p>
+
+<textarea name="comments" rows="5" cols="25"></textarea><br><br>
+
+Male <input type = "radio" name="gender" value = "male" ><br>
+
+Female <input type = "radio" name="gender" value = "female" ><br><br>
+
+<b>Educational qualification</b><br>
+
+<input type = "checkbox" value = "checkbox1" name="checkbox"> SSC
+
+<input type = "checkbox" value = "checkbox1" name="checkbox"> HSC
+
+<br><br><br>
+
+<b>Your home division </b><br>
+
+<select name = "division">
+
+<option> Dhaka </option>
+
+<option> Chittagong </option>
+
+<option> Sylhet </option>
+
+<option> Khulna </option>
+
+<option> Barishal </option>
+
+<option> Rajshahi </option>
+
+</select>
+
+<br><br><br>
+
+<b>Your picture</b><br>
+
+<input type = "hidden" value = "100" name="MAX_FILE_SIZE">
+
+<input name="file" type="file">
+
+<br><br><br>
+
+<input type="submit" value = "Save" name="submit">
+
+<input type = "reset" value = "New" name="clear">
+
+</form>
+
 </body>
+
 </html>
