@@ -597,4 +597,255 @@
                 category: 'pizza',
                 name: 'চিজি পিৎজা (Cheesy Pizza)',
                 price: 450,
-            
+            desc: 'অতিরিক্ত চিজ ও রিচ টপিংসে ভরা ৮ ইঞ্চি তাজা গরম পিৎজা।',
+                image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+  id: 5,
+                category: 'burger',
+                name: 'জুসি বার্গার (Juicy Burger)',
+                price: 160,
+                desc: 'নরম বান, স্পেশাল সস ও চিকেন প্যাটি সমৃদ্ধ ডাবল চিজ বার্গার।',
+                image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                id: 6,
+                category: 'lassi',
+                name: 'মিষ্টি লাচ্ছি (Sweet Lassi)',
+                price: 90,
+                desc: 'ঘন দই, বাদাম এবং পেস্তার মিশ্রণে প্রস্তুত রিফ্রেশিং ঠাণ্ডা লাচ্ছি।',
+                image: 'https://images.unsplash.com/photo-1571006682888-29a399436d40?auto=format&fit=crop&w=600&q=80'
+            }
+        ];
+
+        const allDistricts = [
+            "বাগেরহাট", "বান্দরবান", "বরগুনা", "বরিশাল", "ভোলা", "বগুড়া", "ব্রাহ্মণবাড়িয়া", "চাঁদপুর", 
+            "চাঁপাইনবাবগঞ্জ", "চট্টগ্রাম", "চুয়াডাঙ্গা", "কুমিল্লা", "কক্সবাজার", "ঢাকা", "দিনাজপুর", "ফরিদপুর", 
+            "ফেনী", "গাইবান্ধা", "গাজীপুর", "গোপালগঞ্জ", "হবিগঞ্জ", "জামালপুর", "যশোর", "ঝালকাঠি", 
+            "ঝিনাইদহ", "জয়পুরহাট", "খাগড়াছড়ি", "খুলনা", "কিশোরগঞ্জ", "কুড়িগ্রাম", "কুষ্টিয়া", "লক্ষ্মীপুর", 
+            "লালমনিরহাট", "মাদারীপুর", "মাগুরা", "মানিকগঞ্জ", "মেহেরপুর", "মৌলভীবাজার", "মুন্সীগঞ্জ", "ময়মনসিংহ", 
+            "নওগাঁ", "নড়াইল", "নারায়ণগঞ্জ", "নরসিংদী", "নাটোর", "নেত্রকোনা", "নীলফামারী", "নোয়াখালী", 
+            "পাবনা", "পঞ্চগড়", "পটুয়াখালী", "পিরোজপুর", "রাজবাড়ী", "রাজশাহী", "রাঙ্গামাটি", "রংপুর", 
+            "সাতক্ষীরা", "শরীয়তপুর", "শেরপুর", "সিরাজগঞ্জ", "সুনামগঞ্জ", "সিলেট", "টাঙ্গাইল", "ঠাকুরগাঁও"
+        ];
+
+        const locationData = {
+            "ঢাকা": {
+                "ধানমন্ডি": {
+                    "ধানমন্ডি ১": ["গ্রাম ১", "গ্রাম ২"],
+                    "ধানমন্ডি ২": ["গ্রাম ৩", "গ্রাম ৪"]
+                },
+                "মিরপুর": {
+                    "মিরপুর ১": ["ব্লক এ", "ব্লক বি"]
+                }
+            }
+        };
+
+        allDistricts.forEach(dist => {
+            if (!locationData[dist]) {
+                locationData[dist] = {
+                    "সদর": {
+                        "ইউনিয়ন ১": ["গ্রাম ১", "গ্রাম ২"],
+                        "ইউনিয়ন ২": ["গ্রাম ৩", "গ্রাম ৪"]
+                    }
+                };
+            }
+        });
+
+        let selectedProduct = null;
+
+        function renderProducts(items = products) {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            items.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${p.image}" class="product-img" alt="${p.name}" onclick="openDetailsModal(${p.id})">
+                    <div class="product-info">
+                        <h3 class="product-title">${p.name}</h3>
+                        <p class="product-desc">${p.desc}</p>
+                        <div class="product-price">৳ ${p.price}</div>
+                        <div class="card-buttons">
+                            <button class="btn btn-outline" onclick="openDetailsModal(${p.id})">View Details</button>
+                            <button class="btn" onclick="openCheckoutDirect(${p.id})">Order Now</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMenu(category, btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            if (category === 'all') {
+                renderProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+        }
+
+        function initDistrictDropdown() {
+            const distSelect = document.getElementById('district-select');
+            distSelect.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';
+            allDistricts.sort().forEach(dist => {
+                const opt = document.createElement('option');
+                opt.value = dist;
+                opt.textContent = dist;
+                distSelect.appendChild(opt);
+            });
+        }
+
+        function onDistrictChange() {
+            const dist = document.getElementById('district-select').value;
+            const upaSelect = document.getElementById('upazila-select');
+            const uniSelect = document.getElementById('union-select');
+            const vilSelect = document.getElementById('village-select');
+
+            upaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+            uniSelect.innerHTML = '<option value="">প্রথমে উপজেলা নির্বাচন করুন</option>';
+            uniSelect.disabled = true;
+            vilSelect.innerHTML = '<option value="">প্রথমে ইউনিয়ন নির্বাচন করুন</option>';
+            vilSelect.disabled = true;
+
+            if (dist && locationData[dist]) {
+                upaSelect.disabled = false;
+                Object.keys(locationData[dist]).forEach(upa => {
+                    const opt = document.createElement('option');
+                    opt.value = upa;
+                    opt.textContent = upa;
+                    upaSelect.appendChild(opt);
+                });
+            } else {
+                upaSelect.disabled = true;
+            }
+        }
+
+        function onUpazilaChange() {
+            const dist = document.getElementById('district-select').value;
+            const upa = document.getElementById('upazila-select').value;
+            const uniSelect = document.getElementById('union-select');
+            const vilSelect = document.getElementById('village-select');
+
+            uniSelect.innerHTML = '<option value="">ইউনিয়ন নির্বাচন করুন</option>';
+            vilSelect.innerHTML = '<option value="">প্রথমে ইউনিয়ন নির্বাচন করুন</option>';
+            vilSelect.disabled = true;
+        if (dist && upa && locationData[dist][upa]) {
+                uniSelect.disabled = false;
+                Object.keys(locationData[dist][upa]).forEach(uni => {
+                    const opt = document.createElement('option');
+                    opt.value = uni;
+                    opt.textContent = uni;
+                    uniSelect.appendChild(opt);
+                });
+            } else {
+                uniSelect.disabled = true;
+            }
+        }
+
+        function onUnionChange() {
+            const dist = document.getElementById('district-select').value;
+            const upa = document.getElementById('upazila-select').value;
+            const uni = document.getElementById('union-select').value;
+            const vilSelect = document.getElementById('village-select');
+
+            vilSelect.innerHTML = '<option value="">গ্রাম নির্বাচন করুন</option>';
+
+            if (dist && upa && uni && locationData[dist][upa][uni]) {
+                vilSelect.disabled = false;
+                locationData[dist][upa][uni].forEach(vil => {
+                    const opt = document.createElement('option');
+                    opt.value = vil;
+                    opt.textContent = vil;
+                    vilSelect.appendChild(opt);
+                });
+            } else {
+                vilSelect.disabled = true;
+            }
+        }
+
+        function openDetailsModal(id) {
+            selectedProduct = products.find(p => p.id === id);
+            document.getElementById('modal-img').src = selectedProduct.image;
+            document.getElementById('modal-title').textContent = selectedProduct.name;
+            document.getElementById('modal-price').textContent = `৳ ${selectedProduct.price}`;
+            document.getElementById('modal-desc').textContent = selectedProduct.desc;
+
+            const waMsg = encodeURIComponent(`হ্যালো, আমি "হারুনের কফি শপ" থেকে ${selectedProduct.name} (দাম: ৳${selectedProduct.price}) অর্ডার করতে চাই।`);
+            document.getElementById('modal-whatsapp-btn').onclick = () => {
+                window.open(`https://wa.me/${OWNER_PHONE}?text=${waMsg}`, '_blank');
+            };
+
+            document.getElementById('details-modal').style.display = 'flex';
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('details-modal').style.display = 'none';
+        }
+
+        function openCheckoutFromModal() {
+            closeDetailsModal();
+            openCheckoutModal();
+        }
+
+        function openCheckoutDirect(id) {
+            selectedProduct = products.find(p => p.id === id);
+            openCheckoutModal();
+        }
+
+        function openCheckoutModal() {
+            document.getElementById('checkout-product-name').value = `${selectedProduct.name} (৳${selectedProduct.price})`;
+            document.getElementById('checkout-item-title').textContent = `আইটেম: ${selectedProduct.name} - ৳${selectedProduct.price}`;
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const productName = document.getElementById('checkout-product-name').value;
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const dist = document.getElementById('district-select').value;
+            const upa = document.getElementById('upazila-select').value;
+            const uni = document.getElementById('union-select').value;
+            const vil = document.getElementById('village-select').value;
+            const addr = document.getElementById('cust-address').value;
+
+            const orderMessage = `*নতুন অর্ডার তথ্য:*
+--------------------------
+*আইটেম:* ${productName}
+*মূল্য:* ৳${selectedProduct.price}
+*গ্রাহকের নাম:* ${name}
+*মোবাইল:* ${phone}
+*জেলা:* ${dist}
+*উপজেলা:* ${upa}
+*ইউনিয়ন:* ${uni}
+*গ্রাম:* ${vil}
+*বিস্তারিত ঠিকানা:* ${addr}`;
+
+            const encodedMsg = encodeURIComponent(orderMessage);
+            window.open(`https://wa.me/${OWNER_PHONE}?text=${encodedMsg}`, '_blank');
+
+            alert('ধন্যবাদ! আপনার অর্ডার তথ্য সফলভাবে হোয়াটসঅ্যাপে পাঠানো হচ্ছে।');
+            closeCheckoutModal();
+        }
+
+        window.onclick = function(event) {
+            const detModal = document.getElementById('details-modal');
+            const chkModal = document.getElementById('checkout-modal');
+            if (event.target === detModal) closeDetailsModal();
+            if (event.target === chkModal) closeCheckoutModal();
+        };
+
+        window.onload = function() {
+            renderProducts();
+            initDistrictDropdown();
+        };
+    </script>
+</body>
+</html>
