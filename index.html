@@ -1,1 +1,828 @@
+!DOCTYPE html>
 
+<html lang="bn">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>হারুনের কফি শপ</title>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
+    <style>  
+        :root {  
+            --primary-color: #6f4e37;  
+            --primary-hover: #583e2e;  
+            --secondary-color: #25d366;  
+            --bg-color: #f4f1ea;  
+            --card-bg: #ffffff;  
+            --text-color: #333333;  
+            --light-text: #666666;  
+            --border-color: #e0e0e0;  
+        }  * {  
+        box-sizing: border-box;  
+        margin: 0;  
+        padding: 0;  
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+    }  
+
+    html {  
+        scroll-behavior: smooth;  
+    }  
+
+    body {  
+        background-color: var(--bg-color);  
+        color: var(--text-color);  
+        line-height: 1.6;  
+    }  
+
+    /* Header & Nav */  
+    header {  
+        background-color: var(--primary-color);  
+        color: white;  
+        padding: 1rem 1.5rem;  
+        position: sticky;  
+        top: 0;  
+        z-index: 1000;  
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);  
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+        flex-wrap: wrap;  
+    }  
+
+    .logo {  
+        font-size: 1.4rem;  
+        font-weight: bold;  
+        display: flex;  
+        align-items: center;  
+        gap: 10px;  
+    }  
+
+    nav {  
+        display: flex;  
+        gap: 1rem;  
+        margin-top: 0.5rem;  
+    }  
+
+    nav a {  
+        color: white;  
+        text-decoration: none;  
+        font-weight: 500;  
+        padding: 0.3rem 0.6rem;  
+        border-radius: 4px;  
+        transition: background 0.3s;  
+    }  
+
+    nav a:hover {  
+        background-color: rgba(255, 255, 255, 0.2);  
+    }
+      .container {
+max-width: 1200px;
+margin: 1.5rem auto;
+padding: 0 1rem;
+}
+
+/* Hero / Owner Section */  
+    .hero {  
+        background: var(--card-bg);  
+        border-radius: 12px;  
+        padding: 2rem;  
+        display: flex;  
+        align-items: center;  
+        gap: 2rem;  
+        margin-bottom: 2.5rem;  
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);  
+        text-align: center;  
+        flex-direction: column;  
+    }  
+
+    .hero-img-wrapper {  
+        width: 180px;  
+        height: 180px;  
+        border-radius: 50%;  
+        border: 5px solid var(--primary-color);  
+        overflow: hidden;  
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);  
+        background-color: #eee;  
+        display: flex;  
+        justify-content: center;  
+        align-items: center;  
+    }  
+
+    .hero-img {  
+        width: 100%;  
+        height: 100%;  
+        object-fit: cover;  
+    }  
+
+    .hero-content h1 {  
+        color: var(--primary-color);  
+        margin-bottom: 0.5rem;  
+        font-size: 1.8rem;  
+    }  
+
+    .hero-content h3 {  
+        color: var(--light-text);  
+        margin-bottom: 1rem;  
+        font-size: 1.1rem;  
+    }  
+
+    /* Section Title */  
+    .section-title {  
+        text-align: center;  
+        margin-bottom: 1.5rem;  
+        color: var(--primary-color);  
+        font-size: 1.8rem;  
+        position: relative;  
+    }  
+
+    .section-title::after {  
+        content: '';  
+        display: block;  
+        width: 60px;  
+        height: 3px;  
+        background: var(--primary-color);  
+        margin: 8px auto 0;  
+        border-radius: 2px;  
+    }  
+
+    /* Filter Buttons */  
+    .category-filters {  
+        display: flex;  
+        justify-content: center;  
+        gap: 8px;  
+        flex-wrap: wrap;  
+        margin-bottom: 2rem;  
+    }  
+
+    .filter-btn {  
+        background: var(--card-bg);  
+        border: 1px solid var(--primary-color);  
+        color: var(--primary-color);  
+        padding: 0.5rem 1rem;  
+        border-radius: 20px;  
+        cursor: pointer;  
+        font-weight: 600;  
+        transition: all 0.3s;  
+    }  
+
+    .filter-btn.active, .filter-btn:hover {  
+        background: var(--primary-color);  
+        color: white;  
+    }  
+
+    /* Menu Grid */  
+    .products-grid {  
+        display: grid;  
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));  
+        gap: 1.5rem;  
+        margin-bottom: 3rem;  
+    }  
+
+    .product-card {  
+        background: var(--card-bg);  
+        border-radius: 12px;  
+        overflow: hidden;  
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);  
+        transition: transform 0.3s, box-shadow 0.3s;  
+        display: flex;  
+        flex-direction: column;  
+    }  
+
+    .product-card:hover {  
+        transform: translateY(-5px);  
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);  
+    }  
+
+    .product-img {  
+        width: 100%;  
+        height: 200px;  
+        object-fit: cover;  
+        cursor: pointer;  
+    }  
+
+    .product-info {  
+        padding: 1.2rem;  
+        display: flex;  
+        flex-direction: column;  
+        flex-grow: 1;  
+    }  
+
+    .product-title {  
+        font-size: 1.2rem;  
+        margin-bottom: 0.4rem;  
+        color: var(--text-color);  
+    }  
+
+    .product-desc {  
+        color: var(--light-text);  
+        font-size: 0.88rem;  
+        margin-bottom: 1rem;  
+        flex-grow: 1;  
+    }  
+
+    .product-price {  
+        font-size: 1.25rem;  
+        font-weight: bold;  
+        color: var(--primary-color);  
+        margin-bottom: 1rem;  
+    }  
+
+    .card-buttons {  
+        display: flex;  
+        gap: 8px;  
+    }  
+
+    .btn {  
+        background: var(--primary-color);  
+        color: white;  
+        border: none;  
+        padding: 0.65rem 0.8rem;  
+        border-radius: 6px;  
+        font-size: 0.9rem;  
+        cursor: pointer;  
+        flex: 1;  
+        text-align: center;  
+        transition: background 0.3s;  
+        text-decoration: none;  
+        display: inline-block;  
+        font-weight: 600;  
+        }
+      .btn:hover {
+background: var(--primary-hover);
+}
+
+.btn-outline {  
+        background: transparent;  
+        color: var(--primary-color);  
+        border: 1px solid var(--primary-color);  
+    }  
+
+    .btn-outline:hover {  
+        background: var(--primary-color);  
+        color: white;  
+    }  
+
+    .btn-whatsapp {  
+        background-color: var(--secondary-color);  
+        margin-top: 0.5rem;  
+    }  
+
+    .btn-whatsapp:hover {  
+        background-color: #1eb956;  
+    }  
+
+    /* Modal Styles */  
+    .modal {  
+        display: none;  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0,0,0,0.6);  
+        z-index: 2000;  
+        justify-content: center;  
+        align-items: center;  
+        padding: 1rem;  
+    }  
+
+    .modal-content {  
+        background: var(--card-bg);  
+        border-radius: 12px;  
+        max-width: 550px;  
+        width: 100%;  
+        padding: 1.5rem;  
+        position: relative;  
+        max-height: 90vh;  
+        overflow-y: auto;  
+    }  
+
+    .close-modal {  
+        position: absolute;  
+        top: 10px;  
+        right: 15px;  
+        font-size: 1.8rem;  
+        cursor: pointer;  
+        color: #888;  
+    }  
+
+    .modal-img {  
+        width: 100%;  
+        height: 220px;  
+        object-fit: cover;  
+        border-radius: 8px;  
+        margin-bottom: 1rem;  
+    }  
+
+    /* Form Controls */  
+    .form-group {  
+        margin-bottom: 1rem;  
+    }  
+
+    .form-group label {  
+        display: block;  
+        margin-bottom: 0.3rem;  
+        font-weight: 600;  
+        font-size: 0.9rem;  
+    }  
+
+    .form-control {  
+        width: 100%;  
+        padding: 0.65rem;  
+        border: 1px solid var(--border-color);  
+        border-radius: 6px;  
+        font-size: 0.95rem;  
+    }
+      /* Contact Section */
+.contact-section {
+background: var(--card-bg);
+padding: 2rem;
+border-radius: 12px;
+margin-bottom: 3rem;
+box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.contact-info {  
+        display: flex;  
+        flex-wrap: wrap;  
+        gap: 1.5rem;  
+        justify-content: space-around;  
+    }  
+
+    .contact-item {  
+        display: flex;  
+        align-items: center;  
+        gap: 0.8rem;  
+        font-size: 1rem;  
+    }  
+
+    .contact-item i {  
+        font-size: 1.4rem;  
+        color: var(--primary-color);  
+    }  
+
+    footer {  
+        background: var(--primary-color);  
+        color: white;  
+        text-align: center;  
+        padding: 1.2rem;  
+        margin-top: 2rem;  
+        font-size: 0.9rem;  
+    }  
+
+    @media (min-width: 768px) {  
+        .hero {  
+            flex-direction: row;  
+            text-align: left;  
+        }  
+        header {  
+            padding: 1rem 2rem;  
+        }  
+        nav {  
+            margin-top: 0;  
+        }  
+    }  
+</style>
+
+</head>  
+<body>  <header>  
+    <div class="logo">  
+        <i class="fas fa-mug-hot"></i> হারুনের কফি শপ  
+    </div>  
+    <nav>  
+        <a href="#home">হোম</a>  
+        <a href="#menu-section">মেনু</a>  
+        <a href="#contact-section">যোগাযোগ</a>  
+    </nav>  
+</header>  
+
+<div class="container" id="home">  
+    <!-- Hero / Owner Section -->  
+    <section class="hero">  
+        <div class="hero-img-wrapper">  
+            <img src="1000082357.jpg" alt="মোহাম্মদ হারুন অর রশিদ" class="hero-img" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';">  
+        </div>  
+        <div class="hero-content">  
+            <h1>স্বাগতম, হারুনের কফি শপ-এ!</h1>  
+            <h3>স্বত্বাধিকারী: মোহাম্মদ হারুন অর রশিদ</h3>  
+            <p>আমরা আপনাকে দিচ্ছি তাজা সুবাসিত কফি, সুস্বাদু চিকেন বিরিয়ানি, বারবিকিউ, স্পেশাল পিৎজা, জ্যুসি বার্গার এবং রিফ্রেশিং মিষ্টি লাচ্ছি। চমৎকার স্বাদের সাথে আপনার খাবার ডেলিভারি পেতে আজই অর্ডার করুন।</p>  
+            <a href="#menu-section" class="btn" style="width: auto; padding: 0.6rem 1.5rem; margin-top: 0.8rem;">মেনু দেখুন</a>  
+        </div>  
+    </section>  
+
+    <!-- Menu Section -->  
+    <section id="menu-section">  
+        <h2 class="section-title">আমাদের মেনু</h2>  
+          
+        <!-- Category Filter Buttons -->  
+        <div class="category-filters">  
+            <button class="filter-btn active" onclick="filterMenu('all', this)">সব আইটেম</button>  
+            <button class="filter-btn" onclick="filterMenu('biryani', this)">বিরিয়ানি</button>  
+            <button class="filter-btn" onclick="filterMenu('pizza', this)">পিৎজা</button>  
+            <button class="filter-btn" onclick="filterMenu('burger', this)">বার্গার</button>  
+            <button class="filter-btn" onclick="filterMenu('bbq', this)">বারবিকিউ</button>  
+            <button class="filter-btn" onclick="filterMenu('coffee', this)">কফি</button>  
+            <button class="filter-btn" onclick="filterMenu('lassi', this)">লাচ্ছি</button>  
+        </div>  
+
+        <!-- Product Grid -->  
+        <div class="products-grid" id="products-grid">  
+            <!-- Products dynamically rendered here -->  
+        </div>  
+    </section>  
+
+    <!-- Quick Contact Section -->  
+    <section class="contact-section" style="text-align: center; margin-top: 2rem;">  
+        <h2 class="section-title">প্রয়োজনে যোগাযোগ করুন</h2>  
+        <p style="margin-bottom: 1.5rem; color: var(--light-text);">যেকোনো প্রয়োজনে আমাদের সাথে সরাসরি যোগাযোগ করতে নিচের বোতামগুলোতে ক্লিক করুন:</p>  
+        <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">  
+            <a href="tel:01706712866" class="btn" style="background-color: var(--primary-color); max-width: 220px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">  
+                <i class="fas fa-phone-alt"></i> কল করুন (01706712866)  
+            </a>  
+            <a href="https://wa.me/8801706712866" target="_blank" class="btn btn-whatsapp" style="max-width: 220px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">  
+                <i class="fab fa-whatsapp"></i> হোয়াটসঅ্যাপ চ্যাট  
+            </a>  
+        </div>  
+    </section>  
+
+    <!-- Contact Section -->  
+    <section id="contact-section" class="contact-section">  
+        <h2 class="section-title">যোগাযোগের ঠিকানা</h2>  
+        <div class="contact-info">  
+            <div class="contact-item">  
+                <i class="fas fa-user-circle"></i>  
+                <div>  
+                    <strong>স্বত্বাধিকারী:</strong>  
+                    <div>মোহাম্মদ হারুন অর রশিদ</div>  
+                </div>  
+            </div>  
+            <div class="contact-item">  
+                <i class="fas fa-phone-alt"></i>  
+                <div>  
+                    <strong>মোবাইল ও হোয়াটসঅ্যাপ:</strong>  
+                    <div>01706712866</div>  
+                </div>  
+            </div>  
+            <div class="contact-item">  
+                <i class="fab fa-whatsapp"></i>  
+                <div>  
+                    <strong>সরাসরি চ্যাট:</strong>  
+                    <div><a href="https://wa.me/8801706712866" target="_blank" style="color: var(--secondary-color); font-weight: bold; text-decoration: none;">হোয়াটসঅ্যাপে চ্যাট করুন</a></div>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+</div>
+   <!-- Product Details Modal -->  <div class="modal" id="details-modal">  
+    <div class="modal-content">  
+        <span class="close-modal" onclick="closeDetailsModal()">&times;</span>  
+        <img src="" id="modal-img" class="modal-img" alt="">  
+        <h2 id="modal-title" style="margin-bottom: 0.4rem;"></h2>  
+        <p id="modal-price" style="font-size: 1.25rem; color: var(--primary-color); font-weight: bold; margin-bottom: 0.8rem;"></p>  
+        <p id="modal-desc" style="color: var(--light-text); margin-bottom: 1.2rem;"></p>  
+          
+        <button class="btn" onclick="openCheckoutFromModal()">Order Now (অর্ডার করুন)</button>  
+        <button class="btn btn-whatsapp" id="modal-whatsapp-btn"><i class="fab fa-whatsapp"></i> সরাসরি হোয়াটসঅ্যাপে অর্ডার করুন</button>  
+    </div>  
+</div>  
+
+<!-- Checkout Modal -->  
+<div class="modal" id="checkout-modal">  
+    <div class="modal-content">  
+        <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>  
+        <h2 style="margin-bottom: 0.8rem; color: var(--primary-color);">অর্ডার নিশ্চিতকরণ</h2>  
+        <p id="checkout-item-title" style="font-weight: bold; margin-bottom: 1rem; color: var(--text-color);"></p>  
+          
+        <form id="order-form" onsubmit="submitOrder(event)">  
+            <div class="form-group">  
+                <label for="checkout-product-name">পণ্যের নাম</label>  
+                <input type="text" id="checkout-product-name" class="form-control" readonly style="background-color: #e9ecef; font-weight: bold;">  
+            </div>  
+
+            <div class="form-group">  
+                <label for="cust-name">গ্রাহকের নাম *</label>  
+                <input type="text" id="cust-name" class="form-control" required placeholder="আপনার নাম">  
+            </div>  
+
+            <div class="form-group">  
+                <label for="cust-phone">মোবাইল নম্বর *</label>  
+                <input type="tel" id="cust-phone" class="form-control" required placeholder="017XXXXXXXX">  
+            </div>  
+
+            <div class="form-group">  
+                <label for="district-select">জেলা *</label>  
+                <select id="district-select" class="form-control" required onchange="onDistrictChange()">  
+                    <option value="">জেলা নির্বাচন করুন</option>  
+                </select>  
+            </div>  
+
+            <div class="form-group">  
+                <label for="upazila-select">উপজেলা *</label>  
+                <select id="upazila-select" class="form-control" required disabled>  
+                    <option value="">প্রথমে জেলা নির্বাচন করুন</option>  
+                </select>  
+            </div>  
+
+            <div class="form-group">  
+                <label for="village-input">গ্রাম *</label>  
+                <input type="text" id="village-input" class="form-control" required placeholder="আপনার গ্রামের নাম লিখুন">  
+            </div>  
+
+            <div class="form-group">  
+                <label for="cust-address">বিস্তারিত ঠিকানা *</label>  
+                <textarea id="cust-address" class="form-control" rows="2" required placeholder="বাসা/রোড নম্বর বা ল্যান্ডমার্ক"></textarea>  
+            </div>  
+
+            <button type="submit" class="btn"><i class="fas fa-check-circle"></i> অর্ডার কনফার্ম করুন</button>  
+        </form>  
+    </div>  
+</div>  
+
+<footer>  
+    <p>&copy; ২০২৬ হারুনের কফি শপ। স্বত্বাধিকারী: মোহাম্মদ হারুন অর রশিদ (01706712866)</p>  
+</footer>  
+
+<script>  
+    const OWNER_PHONE = "8801706712866";  
+
+    const products = [  
+        {  
+            id: 1,  
+            category: 'coffee',  
+            name: 'স্পেশাল কফি (Special Coffee)',  
+            price: 120,  
+            desc: 'প্রিমিয়াম অ্যারাবিকা বিন থেকে তৈরি তাজা অ্যারোমেটিক হট কফি।',  
+            image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80'  
+        },  
+        {  
+            id: 2,  
+            category: 'biryani',  
+            name: 'চিকেন বিরিয়ানি (Chicken Biryani)',  
+            price: 250,  
+            desc: 'খাস বাসমতি চাল ও স্পেশাল মশলায় তৈরি ঐতিহ্যবাহী চিকেন বিরিয়ানি।',  
+            image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80'  
+        },  
+        {  
+            id: 3,  
+            category: 'bbq',  
+            name: 'চিকেন বারবিকিউ (Chicken BBQ)',  
+            price: 180,  
+            desc: 'কয়লার আগুনে পোড়ানো মশলাদার ও জ্যুস স্মোকি চিকেন বারবিকিউ।',  
+            image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80'  
+        },  
+        {  
+            id: 4,  
+            category: 'pizza',  
+            name: 'চিজি পিৎজা (Cheesy Pizza)',  
+            price: 450,  
+            desc: 'অতিরিক্ত চিজ ও রিচ টপিংসে ভরা ৮ ইঞ্চি তাজা গরম পিৎজা।',  
+            image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80'  
+        },  
+        {  
+            id: 5,  
+            category: 'burger',  
+            name: 'জুসি বার্গার (Juicy Burger)',  
+            price: 160,  
+            desc: 'নরম বান, স্পেশাল সস ও চিকেন প্যাটি সমৃদ্ধ ডাবল চিজ বার্গার।',  
+            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80'  
+        },  
+        {  
+            id: 6,  
+            category: 'lassi',  
+            name: 'মিষ্টি লাচ্ছি (Sweet Lassi)',  
+            price: 90,  
+            desc: 'ঘন দই, বাদাম এবং পেস্তার মিশ্রণে প্রস্তুত রিফ্রেশিং ঠাণ্ডা লাচ্ছি।',  
+            image: 'https://images.unsplash.com/photo-1571006682888-29a399436d40?auto=format&fit=crop&w=600&q=80'  
+        }
+      ];
+
+const allDistricts = [  
+        "বাগেরহাট", "বান্দরবান", "বরগুনা", "বরিশাল", "ভোলা", "বগুড়া", "ব্রাহ্মণবাড়িয়া", "চাঁদপুর",   
+        "চাঁপাইনবাবগঞ্জ", "চট্টগ্রাম", "চুয়াডাঙ্গা", "কুমিল্লা", "কক্সবাজার", "ঢাকা", "দিনাজপুর", "ফরিদপুর",   
+        "ফেনী", "গাইবান্ধা", "গাজীপুর", "গোপালগঞ্জ", "হবিগঞ্জ", "জামালপুর", "যশোর", "ঝালকাঠি",   
+        "ঝিনাইদহ", "জয়পুরহাট", "খাগড়াছড়ি", "খুলনা", "কিশোরগঞ্জ", "কুড়িগ্রাম", "কুষ্টিয়া", "লক্ষ্মীপুর",   
+        "লালমনিরহাট", "মাদারীপুর", "মাগুরা", "মানিকগঞ্জ", "মেহেরপুর", "মৌলভীবাজার", "মুন্সীগঞ্জ", "ময়মনসিংহ",   
+        "নওগাঁ", "নড়াইল", "নারায়ণগঞ্জ", "নরসিংদী", "নাটোর", "নেত্রকোনা", "নীলফামারী", "নোয়াখালী",   
+        "পাবনা", "পঞ্চগড়", "পটুয়াখালী", "পিরোজপুর", "রাজবাড়ী", "রাজশাহী", "রাঙ্গামাটি", "রংপুর",   
+        "সাতক্ষীরা", "শরীয়তপুর", "শেরপুর", "সিরাজগঞ্জ", "সুনামগঞ্জ", "সিলেট", "টাঙ্গাইল", "ঠাকুরগাঁও"  
+    ];  
+
+    // ৬৪ জেলার উপজেলা ডেটা (চাঁপাইনবাবগঞ্জ সহ অন্যান্য জেলার জন্য)  
+    const upazilasByDistrict = {  
+        "চাঁপাইনবাবগঞ্জ": ["সদর", "শিবগঞ্জ", "নাচোল", "গোমস্তাপুর", "ভোলাহাট"],  
+        "ঢাকা": ["সাভার", "ধামরাই", "কেরানীগঞ্জ", "নবাবগঞ্জ", "দোহার", "ঢাকা মহানগর"],  
+        "গাজীপুর": ["গাজীপুর সদর", "কালিয়াকৈর", "শ্রীপুর", "কাপাসিয়া", "কালীগঞ্জ"],  
+        "নারায়ণগঞ্জ": ["নারায়ণগঞ্জ সদর", "বন্দর", "আড়াইহাজার", "রূপগঞ্জ", "সোনারগাঁও"],  
+        "মুন্সীগঞ্জ": ["মুন্সীগঞ্জ সদর", "শ্রীনগর", "সিরাজদিখান", "লৌহজং", "টংগীবাড়ী", "গজারিয়া"],  
+        "মানিকগঞ্জ": ["মানিকগঞ্জ সদর", "সিঙ্গাইর", "ঘিওর", "দৌলতপুর", "সাটুরিয়া", "শিবালয়", "হরিরামপুর"],  
+        "নরসিংদী": ["নরসিংদী সদর", "পলাশ", "শিবপুর", "মনোহরদী", "বেলাবো", "রায়পুরা"],  
+        "ফরিদপুর": ["ফরিদপুর সদর", "বোয়ালমারী", "আলফাডাঙ্গা", "মধুখালী", "নগরকান্দা", "সালথা", "ভাঙ্গা", "সদরপুর", "চরভদ্রাসন"],  
+        "মাদারীপুর": ["মাদারীপুর সদর", "শিবচর", "কালকিনি", "রাজৈর", "ডাসার"],  
+        "শরীয়তপুর": ["শরীয়তপুর সদর", "জাজিরা", "নড়িয়া", "ভেদরগঞ্জ", "ডামুড্যা", "গোসাইরহাট"],  
+        "রাজবাড়ী": ["রাজবাড়ী সদর", "পাংশা", "কালুখালী", "বালিয়াকান্দি", "গোয়ালন্দ"],  
+        "গোপালগঞ্জ": ["গোপালগঞ্জ সদর", "টুঙ্গিপাড়া", "কোটালীপাড়া", "মুকসুদপুর", "কাশিয়ানী"],  
+        "টাঙ্গাইল": ["টাঙ্গাইল সদর", "কালিহাতী", "ঘাটাইল", "মধুপুর", "ধনবাড়ী", "গোপালপুর", "ভূঞাপুর", "দেলদুয়ার", "মির্জাপুর", "বাসাইল", "সখিপুর", "নাগরপুর"],  
+        "কিশোরগঞ্জ": ["কিশোরগঞ্জ সদর", "হোসেনপুর", "পাকুন্দিয়া", "কটিয়াদী", "করিমগঞ্জ", "তাড়াইল", "ইটনা", "মিঠামইন", "অষ্টগ্রাম", "নিকলী", "বাজিতপুর", "কুলিয়ারচর", "ভৈরব"],  
+        "রাজশাহী": ["পবা", "গোদাগাড়ী", "তানোর", "মোহনপুর", "বাগমারা", "দুর্গাপুর", "পুঠিয়া", "চারঘাট", "বাঘা", "রাজশাহী সদর"],  
+        "নওগাঁ": ["নওগাঁ সদর", "রানীনগর", "আত্রাই", "মহাদেবপুর", "বদলগাছী", "ধামইরহাট", "পত্নীতলা", "সাপাহার", "পোরশা", "মান্দা", "নিয়ামতপুর"],  
+        "নাটোর": ["নাটোর সদর", "সিংড়া", "বড়াইগ্রাম", "গুরুদাসপুর", "লালপুর", "বাগাতিপাড়া", "নলডাঙ্গা"],  
+        "বগুড়া": ["বগুড়া সদর", "শাজাহানপুর", "শেরপুর", "ধুনট", "গাবতলী", "সারিয়াকান্দি", "সোনাতলা", "শিবগঞ্জ", "আদমদীঘি", "দુપচাঁচিয়া", "কাহালু", "নন্দীগ্রাম"],  
+        "জয়পুরহাট": ["জয়পুরহাট সদর", "পাঁচবিবি", "আক্কেলপুর", "ক্ষেতলাল", "কালাই"],  
+        "পাবনা": ["পাবনা সদর", "ঈশ্বরদী", "আটঘরিয়া", "চাটমোহর", "ভাঙ্গুরা", "ফরিদপুর", "বেড়া", "সাঁথিয়া", "সুজানগর"],  
+        "সিরাজগঞ্জ": ["সিরাজগঞ্জ সদর", "কাজিপুর", "রায়গঞ্জ", "তাড়াশ", "উল্লাপাড়া", "শাহজাদপুর", "বেলকুচি", "চৌহালী", "কামারখন্দ"],  
+        "চট্টগ্রাম": ["মীরসরাই", "সীতাকুণ্ড", "ফটিকছড়ি", "হাটহাজারী", "রাউজান", "রাঙ্গুনিয়া", "বোয়ালখালী", "পটিয়া", "চন্দনাইশ", "আনোয়ারা", "বাঁশখালী", "সাতকানিয়া", "লোহাগাড়া", "সন্দ্বীপ", "কর্ণফুলী", "চট্টগ্রাম সদর"],  
+        "কক্সবাজার": ["কক্সবাজার সদর", "ঈদগাঁও", "রামু", "উখিয়া", "টেকনাফ", "চকরিয়া", "পেকুয়া", "মহেশখালী", "কুতুবদিয়া"],  
+        "কুমিল্লা": ["কুমিল্লা আদর্শ সদর", "কুমিল্লা সদর দক্ষিণ", "চান্দিনা", "দাউদকান্দি", "মেঘনা", "হোমনা", "তিতাস", "মুরাদনগর", "দেবিদ্বার", "বুড়িচং", "ব্রাহ্মণপাড়া", "লাকসাম", "মনোহরগঞ্জ", "চৌদ্দগ্রাম", "নাঙ্গলকোট", "বরুড়া", "লালমাই"],  
+        "ব্রাহ্মণবাড়িয়া": ["ব্রাহ্মণবাড়িয়া সদর", "আশুগঞ্জ", "সরাইল", "নাসিরনগর", "নবীনগর", "বাঞ্ছারামপুর", "কসবা", "আখাউড়া", "বিজয়নগর"],  
+        "চাঁদপুর": ["চাঁদপুর সদর", "মতলব উত্তর", "মতলব দক্ষিণ", "হাজিগঞ্জ", "শাহরাস্তি", "কচুয়া", "ফরিদগঞ্জ", "হাইমচর"],  
+        "নোয়াখালী": ["নোয়াখালী সদর", "বেগমগঞ্জ", "চাটখিল", "সোনাইমুড়ী", "সেনবাগ", "কোম্পানীগঞ্জ", "কবিরহাট", "সুবর্ণচর", "হাতিয়া"],  
+        "ফেনী": ["ফেনী সদর", "দাগনভূঞা", "সোনাগাজী", "ছাগলনাইয়া", "পরশুরাম", "ফুলগাজী"],  
+        "লক্ষ্মীপুর": ["লক্ষ্মীপুর সদর", "রায়পুর", "রামগঞ্জ", "রামগতি", "কমলনগরে"],  
+        "রাঙ্গামাটি": ["রাঙ্গামাটি সদর", "কাউখালী", "বরকল", "কাপ্তাই", "জুরাছড়ি", "বাঘাইছড়ি", "লংগদু", "রাজস্থলী", "বেলাইছড়ি", "নানিয়ারচর"],  
+        "বান্দরবান": ["বান্দরবান সদর", "রোয়াংছড়ি", "রুমা", "থানচি", "লামা", "আলীকদম", "নাইক্ষ্যংছড়ি"],  
+        "খাগড়াছড়ি": ["খাগড়াছড়ি সদর", "দিঘীনালা", "পানছড়ি", "মহালছড়ি", "মাটিরাঙ্গা", "মানিকছড়ি", "রামগড়", "লক্ষ্মীছড়ি", "গুইমারা"],  
+        "খুলনা": ["রূপসা", "তেরখাদা", "দিঘলিয়া", "ফুলতলা", "বটিয়াঘাটা", "ডুমুরিয়া", "পাইকগাছা", "কয়রা", "দাকোপ", "খুলনা সদর"],  
+        "যশোর": ["যশোর সদর", "ঝিকরগাছা", "চৌগাছা", "শার্শা", "মণিরামপুর", "কেশবপুর", "বাঘারপাড়া", "অভয়নগর"],  
+        "সাতক্ষীরা": ["সাতক্ষীরা সদর", "কলারোয়া", "তালা", "দেবহাটা", "আশাশুনি", "কালীগঞ্জ", "শ্যামনগর"],  
+        "বাগেরহাট": ["বাগেরহাট সদর", "ফকিরহাট", "মোল্লাহাট", "চিতলমারী", "কচুয়া", "রামপাল", "মোংলা", "মোড়েলগঞ্জ", "শরণখোলা"],  
+        "ঝিনাইদহ": ["ঝিনাইদহ সদর", "কালীগঞ্জ", "কোটচাঁদপুর", "মহেশপুর", "শৈলকুপা", "হরিণাকুণ্ডু"],  
+        "মাগুরা": ["মাগুরা সদর", "শ্রীপুর", "শালিখা", "মোহাম্মদপুর"],  
+        "নড়াইল": ["নড়াইল সদর", "লোহাগাড়া", "কালিয়া"],  
+        "কুষ্টিয়া": ["কুষ্টিয়া সদর", "কুমারখালী", "খোকসা", "মিরপুর", "ভেড়ামারা", "দৌলতপুর"],  
+        "মেহেরপুর": ["মেহেরপুর সদর", "মুজিবনগর", "গাংনী"],  
+        "চুয়াডাঙ্গা": ["চুয়াডাঙ্গা সদর", "আলমডাঙ্গা", "দামুড়হুদা", "জীবননগর"],  
+        "বরিশাল": ["বরিশাল সদর", "বাকেরগঞ্জ", "বাবুগঞ্জ", "উজিরপুর", "বানারীপাড়া", "গৌরনদী", "আগৈলঝাড়া", "মেহেন্দীগঞ্জ", "মুলাদী", "হিজলা"],  
+        "পটুয়াখালী": ["পটুয়াখালী সদর", "দুমকী", "মির্জাগঞ্জ", "বাউফল", "দশমিনা", "গলাচিপা", "রাঙ্গাবালী", "কলাপাড়া"],  
+        "ভোলা": ["ভোলা সদর", "দৌলতখান", "বোরহানউদ্দিন", "তজুমদ্দিন", "লালমোহন", "চরফ্যাশন", "মনপুরা"],  
+        "বরগুনা": ["বরগুনা সদর", "আমতলী", "তালতলী", "পাথরঘাটা", "বেতাগী", "বামনা"],  
+        "পিরোজপুর": ["পিরোজপুর সদর", "ইন্দুরকানী", "কাউখালী", "নেছারাবাদ (স্বরূপকাঠী)", "নাজিরপুর", "ভাণ্ডারিয়া", "মঠবাড়িয়া"],  
+        "ঝালকাঠি": ["ঝালকাঠি সদর", "নলছিটি", "রাজাপুর", "কাঠালিয়া"],  
+        "সিলেট": ["সিলেট সদর", "দক্ষিণ সুরমা", "ফেঞ্চুগঞ্জ", "গোলাপগঞ্জ", "বিয়ানীবাজার", "জকিগঞ্জ", "কানাইঘাট", "জৈন্তাপুর", "গোয়াইনঘাট", "কোম্পানীগঞ্জ", "বিশ্বনাথ", "বালাগঞ্জ", "ওসমানীনগর"],  
+        "মৌলভীবাজার": ["মৌলভীবাজার সদর", "রাজনগর", "কুলাউড়া", "জুড়ী", "বড়লেখা", "কমলগঞ্জ", "শ্রীমঙ্গল"],  
+        "সুনামগঞ্জ": ["সুনামগঞ্জ সদর", "শান্তিগঞ্জ", "ছাতক", "দোয়ারাবাজার", "জগন্নাথপুর", "দিরাই", "শাল্লা", "ধর্মপাশা", "মধ্যনগর", "জামালগঞ্জ", "তাহিরপুর", "বিশ্বম্ভরপুর"],  
+        "হবিগঞ্জ": ["হবিগঞ্জ সদর", "শায়েস্তাগঞ্জ", "চুনারুঘাট", "মাধবপুর", "বাহুবল", "নবীগঞ্জ", "বানিয়াচং", "আজমিরীগঞ্জ", "লাখাই"],  
+        "রংপুর": ["রংপুর সদর", "গঙ্গাচরা", "কাউনিয়া", "পীরগাছা", "মিঠাপুকুর", "পীরগঞ্জ", "বদরগঞ্জ", "তারাগঞ্জ"],  
+        "দিনাজপুর": ["দিনাজপুর সদর", "বিরল", "বোচাগঞ্জ", "কাহারোল", "বীরগঞ্জ", "খানসামা", "চিরিরবন্দর", "পার্বতীপুর", "ফুলবাড়ী", "নবাবগঞ্জ", "বিরামপুর", "হাকিমপুর", "ঘোড়াঘাট"],  
+        "কুড়িগ্রাম": ["কুড়িগ্রাম সদর", "রাজারহাট", "ফুলবাড়ী", "নাগেশ্বরী", "ভুরুঙ্গামারী", "উলিপুর", "চিলমারী", "রৌমারী", "রাজীবপুর"],  
+        "গাইবান্ধা": ["গাইবান্ধা সদর", "সাদুল্লাপুর", "সুন্দরগঞ্জ", "গোবিন্দগঞ্জ", "পলাশবাড়ী", "সাঘাটা", "ফুলছড়ি"],  
+        "নীলফামারী": ["নীলফামারী সদর", "সৈয়দপুর", "ডোমার", "ডিমলা", "জলঢাকা", "কিশোরগঞ্জ"],  
+        "পঞ্চগড়": ["পঞ্চগড় সদর", "তেঁতুলিয়া", "আটোয়ারী", "বোদা", "দেবীগঞ্জ"],  
+        "ঠাকুরগাঁও": ["ঠাকুরগাঁও সদর", "পীরগঞ্জ", "রানীশংকৈল", "হরিপুর", "বালিয়াডাঙ্গী"],  
+        "লালমনিরহাট": ["লালমনিরহাট সদর", "আদিতমারী", "কালীগঞ্জ", "হাতীবান্ধা", "পাটগ্রাম"],  
+        "ময়মনসিংহ": ["ময়মনসিংহ সদর", "মুক্তাগাছা", "ফুলবাড়ীয়া", "ত্রিশাল", "ভালুকা", "গফরগাঁও", "নান্দাইল", "ঈশ্বরগঞ্জ", "গৌরীপুর", "ফুলপুর", "তারাকান্দা", "হালুয়াঘাট", "ধোবাউড়া"],  
+        "জামালপুর": ["জামালপুর সদর", "সরিষাবাড়ী", "মেলান্দহ", "ইসলামপুর", "দেওয়ানগঞ্জ", "মাদারগঞ্জ", "বকশীগঞ্জ"],  
+        "শেরপুর": ["শেরপুর সদর", "নালিতাবাড়ী", "শ্রীবরদী", "ঝিনাইগাতী", "নকলা"],  
+        "নেত্রকোণা": ["নেত্রকোণা সদর", "বারহাট্টা", "কলমাকান্দা", "দুর্গাপুর", "পূর্বধলা", "কেন্দুয়া", "আটপাড়া", "মদন", "খালিয়াজুরী", "মোহনগঞ্জ"]  
+    };  
+
+    let selectedProduct = null;  
+
+    function renderProducts(items = products) {  
+        const grid = document.getElementById('products-grid');  
+        grid.innerHTML = '';  
+        items.forEach(p => {  
+            const card = document.createElement('div');  
+            card.className = 'product-card';  
+            card.innerHTML = `  
+                <img src="${p.image}" class="product-img" alt="${p.name}" onclick="openDetailsModal(${p.id})">  
+                <div class="product-info">  
+                    <h3 class="product-title">${p.name}</h3>  
+                    <p class="product-desc">${p.desc}</p>  
+                    <div class="product-price">৳ ${p.price}</div>  
+                    <div class="card-buttons">  
+                        <button class="btn btn-outline" onclick="openDetailsModal(${p.id})">View Details</button>  
+                        <button class="btn" onclick="openCheckoutDirect(${p.id})">Order Now</button>  
+                    </div>  
+                </div>
+               `;
+grid.appendChild(card);
+});
+}
+
+function filterMenu(category, btnElement) {  
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));  
+        btnElement.classList.add('active');  
+
+        if (category === 'all') {  
+            renderProducts(products);  
+        } else {  
+            const filtered = products.filter(p => p.category === category);  
+            renderProducts(filtered);  
+        }  
+    }  
+
+    function initDistrictDropdown() {  
+        const distSelect = document.getElementById('district-select');  
+        distSelect.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';  
+        allDistricts.sort().forEach(dist => {  
+            const opt = document.createElement('option');  
+            opt.value = dist;  
+            opt.textContent = dist;  
+            distSelect.appendChild(opt);  
+        });  
+    }  
+
+    function onDistrictChange() {  
+        const dist = document.getElementById('district-select').value;  
+        const upaSelect = document.getElementById('upazila-select');  
+
+        upaSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';  
+
+        if (dist && upazilasByDistrict[dist]) {  
+            upaSelect.disabled = false;  
+            upazilasByDistrict[dist].forEach(upa => {  
+                const opt = document.createElement('option');  
+                opt.value = upa;  
+                opt.textContent = upa;  
+                upaSelect.appendChild(opt);  
+            });  
+        } else {  
+            upaSelect.disabled = true;  
+        }  
+    }  
+
+    function openDetailsModal(id) {  
+        selectedProduct = products.find(p => p.id === id);  
+        document.getElementById('modal-img').src = selectedProduct.image;  
+        document.getElementById('modal-title').textContent = selectedProduct.name;  
+        document.getElementById('modal-price').textContent = `৳ ${selectedProduct.price}`;  
+        document.getElementById('modal-desc').textContent = selectedProduct.desc;  
+
+        const waMsg = encodeURIComponent(`হ্যালো, আমি "হারুনের কফি শপ" থেকে ${selectedProduct.name} (দাম: ৳${selectedProduct.price}) অর্ডার করতে চাই।`);  
+        document.getElementById('modal-whatsapp-btn').onclick = () => {  
+            window.open(`https://wa.me/${OWNER_PHONE}?text=${waMsg}`, '_blank');  
+        };  
+
+        document.getElementById('details-modal').style.display = 'flex';  
+    }  
+
+    function closeDetailsModal() {  
+        document.getElementById('details-modal').style.display = 'none';  
+    }  
+
+    function openCheckoutFromModal() {  
+        closeDetailsModal();  
+        openCheckoutModal();  
+    }  
+
+    function openCheckoutDirect(id) {  
+        selectedProduct = products.find(p => p.id === id);  
+        openCheckoutModal();  
+    }  
+
+    function openCheckoutModal() {  
+        document.getElementById('checkout-product-name').value = `${selectedProduct.name} (৳${selectedProduct.price})`;  
+        document.getElementById('checkout-item-title').textContent = `আইটেম: ${selectedProduct.name} - ৳${selectedProduct.price}`;  
+        document.getElementById('checkout-modal').style.display = 'flex';  
+    }  
+
+    function closeCheckoutModal() {  
+        document.getElementById('checkout-modal').style.display = 'none';  
+    }  
+
+    function submitOrder(e) {  
+        e.preventDefault();  
+        const productName = document.getElementById('checkout-product-name').value;  
+        const name = document.getElementById('cust-name').value;  
+        const phone = document.getElementById('cust-phone').value;  
+        const dist = document.getElementById('district-select').value;  
+        const upa = document.getElementById('upazila-select').value;  
+        const vil = document.getElementById('village-input').value;  
+        const addr = document.getElementById('cust-address').value;  
+
+        const orderMessage = `*নতুন অর্ডার তথ্য:*
+
+
+---
+
+আইটেম: ${productName}
+মূল্য: ৳${selectedProduct.price}
+গ্রাহকের নাম: ${name}
+মোবাইল: ${phone}
+জেলা: ${dist}
+উপজেলা: ${upa}
+গ্রাম: ${vil}
+বিস্তারিত ঠিকানা: ${addr}`;
+
+const encodedMsg = encodeURIComponent(orderMessage);  
+        window.open(`https://wa.me/${OWNER_PHONE}?text=${encodedMsg}`, '_blank');  
+
+        alert('ধন্যবাদ! আপনার অর্ডার তথ্য সফলভাবে হোয়াটসঅ্যাপে পাঠানো হচ্ছে।');  
+        closeCheckoutModal();  
+    }  
+
+    window.onclick = function(event) {  
+        const detModal = document.getElementById('details-modal');  
+        const chkModal = document.getElementById('checkout-modal');  
+        if (event.target === detModal) closeDetailsModal();  
+        if (event.target === chkModal) closeCheckoutModal();  
+    };  
+
+    window.onload = function() {  
+        renderProducts();  
+        initDistrictDropdown();  
+    };  
+</script>
+
+</body>  
+</html> 
+      
