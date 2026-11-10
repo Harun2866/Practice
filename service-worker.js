@@ -61,10 +61,48 @@ self.addEventListener("fetch", event => {
                     .then(response => {
 
                         return response || caches.match("./index.html");
+                        
 
                     });
 
             })
     );
+
+});
+let deferredPrompt;
+
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (event) => {
+
+    event.preventDefault();
+
+    deferredPrompt = event;
+
+    installBtn.hidden = false;
+
+});
+
+installBtn.addEventListener("click", async () => {
+
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    const result = await deferredPrompt.userChoice;
+
+    console.log("Install result:", result.outcome);
+
+    deferredPrompt = null;
+
+    installBtn.hidden = true;
+
+});
+
+window.addEventListener("appinstalled", () => {
+
+    installBtn.hidden = true;
+
+    console.log("App installed successfully!");
 
 });
