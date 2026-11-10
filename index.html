@@ -1,9 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>নামাজের সময়সূচি</title>
+
+    <title>হাকরইল জামে মসজিদ</title>
+
+    <!-- PWA Settings -->
+    <meta name="theme-color" content="#121212">
+    <meta name="description" content="হাকরইল জামে মসজিদের নামাজের সময়সূচি">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+
     <style>
         body {
             background-color: #121212;
@@ -95,21 +104,10 @@
         }
 
         @media (max-width: 380px) {
-            .time {
-                font-size: 48px;
-            }
-
-            .mosque-name {
-                font-size: 26px;
-            }
-
-            .prayer-name {
-                font-size: 18px;
-            }
-
-            .prayer-time {
-                font-size: 23px;
-            }
+            .time { font-size: 48px; }
+            .mosque-name { font-size: 26px; }
+            .prayer-name { font-size: 18px; }
+            .prayer-time { font-size: 23px; }
         }
     </style>
 </head>
@@ -121,13 +119,12 @@
     <div class="bismillah">
         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
     </div>
-  <p>Harun Or Rashid </p>
+
+    <p>Harun Or Rashid</p>
 
     <h1 class="mosque-name">হাকরইল জামে মসজিদ</h1>
 
-    <div class="subtitle">
-        নামাজের সময়সূচি
-    </div>
+    <div class="subtitle">নামাজের সময়সূচি</div>
 
     <div>
         <span class="time" id="clock">00:00:00</span>
@@ -135,9 +132,7 @@
 
     <div class="date" id="date"></div>
 
-    <div class="section-title">
-        নামাজের সময়সূচি
-    </div>
+    <div class="section-title">নামাজের সময়সূচি</div>
 
     <div class="prayer-row">
         <span class="prayer-name">ফজর</span>
@@ -187,6 +182,7 @@
 
 <script>
 function updateClock() {
+
     let now = new Date();
 
     let time = new Intl.DateTimeFormat("en-US", {
@@ -211,6 +207,24 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 1000);
+
+
+// Register Service Worker
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(registration => {
+                console.log("PWA Ready:", registration.scope);
+            })
+            .catch(error => {
+                console.log("PWA Error:", error);
+            });
+
+    });
+
+}
 </script>
 
 </body>
